@@ -15,7 +15,7 @@ Almost strickly faster than new/delete. Especially in the case of frequent memor
 
 请注意，以下代码在测试上比main.cpp更加丰富。但是内存池实现部分没有区别。
 
-以下代码的内存基本单位是 `int` 而非 `char`。这是有原因的。
+内存申请的基本单位是 `int` 而非 `char`。
 
 
 
