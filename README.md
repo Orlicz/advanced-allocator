@@ -3,6 +3,22 @@ advanced allocator for cpp.
 
 Almost strickly faster than new/delete. Especially in the case of frequent memory requests
 
+---
+
+## ZH-CN:
+
+快速的内存池。调整 `const int G` 可以得到上界 $2^G$ 的内存池。（但是算法不能保证完全利用，但是我无法构造3倍浪费以上的界）
+
+下一步将优化第一步注释的相关位置，以进一步节约空间，优化内存连续性。
+
+在小对象频繁析构时，速度快于标准new delete。在另外一些情况可能不同，但是在计算机波动下可能没有差距。
+
+请注意，以下代码在测试上比main.cpp更加丰富。但是内存池实现部分没有区别。
+
+以下代码的内存基本单位是 `int` 而非 `char`。这是有原因的。
+
+
+
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -131,7 +147,7 @@ namespace test_stl_insertend {
 
 signed main() {
 	ios::sync_with_stdio(0),cin.tie(0);
-	init();//care!
+	init();
 
 	test_zhihu::test<allocator<test_zhihu::E>>();
 	test_zhihu::test<fallocator<test_zhihu::E>>();
@@ -141,5 +157,11 @@ signed main() {
 
 	test_stl_insertend::test(set<int,less<int>,allocator<int>>(),100);
 	test_stl_insertend::test(set<int,less<int>,fallocator<int>>(),100);
+
+	test_stl_insertend::test<set<int,less<int>,allocator<int>>,100000>({},1000);
+	test_stl_insertend::test<set<int,less<int>,fallocator<int>>,100000>({},1000);
+
+	test_stl_insertend::test<set<int,less<int>,allocator<int>>,10000>({},10000);
+	test_stl_insertend::test<set<int,less<int>,fallocator<int>>,10000>({},10000);
 }
 ```
